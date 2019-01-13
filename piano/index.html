@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Make music with the WebAudio API</title>
+  <meta charset="utf-8"/>
+  <link rel="stylesheet" href="css/index.css">
+  <script src="js/index.js" charset="utf-8"></script>
+</head>
+<body>
+  <!--
+I Hope you enjoy this pen, it was a lot of fun to make.
+
+Both mouse and keyboard is supported. However, make sure you click onto the preview window before using keyboard.
+-->
+<div id="synth">
+  <div id="oscs">
+    <div id="osc1" class="osc">
+      <h4>Osc 1</h4>
+      <div class="waveForm">
+        <h5>Wave Form</h5>
+        <div class="ledLabel">
+          <input type="radio" id="osc1Led0" data-position="0" name="osc1Led" data-waveform="sine" data-osc="1" onclick="setWaveForm(this)">
+          <label for="osc1Led0"><span></span><img src="https://www.dropbox.com/s/tnzshhffok4n9ux/sine.png?dl=0&raw=1" alt="sine wave"></label>
+        </div>
+        <div class="ledLabel">
+          <input type="radio" id="osc1Led1" data-position="1" name="osc1Led" data-waveform="square" data-osc="1" onclick="setWaveForm(this)" checked>
+          <label for="osc1Led1"><span></span><img src="https://www.dropbox.com/s/vzq1yzkc123cxug/square.png?dl=0&raw=1" alt="square wave"></label>
+        </div>
+
+        <div class="ledLabel">
+          <input type="radio" id="osc1Led2" data-position="2" name="osc1Led" data-waveform="sawtooth" data-osc="1" onclick="setWaveForm(this)">
+          <label for="osc1Led2"><span></span><img src="https://www.dropbox.com/s/du33z0m0pxkuxar/sawtooth.png?dl=0&raw=1" alt="sawtooth wave"></label>
+        </div>
+
+        <div class="ledLabel">
+          <input type="radio" id="osc1Led3" data-position="3" name="osc1Led" data-waveform="triangle" data-osc="1" onclick="setWaveForm(this)">
+          <label for="osc1Led3"><span></span><img src="https://www.dropbox.com/s/au6p9mn2h8xb0lp/triangle.png?dl=0&raw=1" alt="triangle wave"></label>
+        </div>
+        <div class="ledLabel">
+          <div class="buttonDrop">
+            <button id="switchOsc1Wave" data-osc="1" onclick="setWaveForm(this)"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gain">
+        <h5>Gain</h5>
+        <input id="osc1Gain" type="range" min="0" max="100" value="100" data-osc="1">
+      </div>
+
+      <div class="octave">
+        <h5>Octave</h5>
+        <div class="ledLabel">
+          <input type="radio" id="osc1OctLed0" data-position="0" name="osc1OctLed" data-osc="1" onclick="setOctave(this)" checked>
+          <label for="osc1OctLed0"><span></span>4'</label>
+        </div>
+        <div class="ledLabel">
+          <input type="radio" id="osc1OctLed1" data-position="1" name="osc1OctLed" data-osc="1" onclick="setOctave(this)" >
+          <label for="osc1OctLed1"><span></span>8'</label>
+        </div>
+        <div class="ledLabel">
+          <input type="radio" id="osc1OctLed2" data-position="2" name="osc1OctLed" data-osc="1" onclick="setOctave(this)" >
+          <label for="osc1OctLed2"><span></span>16'</label>
+        </div>
+
+        <div class="ledLabel">
+          <div class="buttonDrop">
+            <button id="switchOsc1Octave" data-osc="1" onclick="setOctave(this)"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="fineTune">
+        <h5>Fine Tune</h5>
+        <input id="osc1FineTune" type="range" min="-10" max="10" value="0" data-osc="1" step="1" list="range_snap">
+      </div>
+    </div>
+
+
+    <div id="osc2" class="osc">
+      <h4>Osc 2</h4>
+      <div class="waveForm">
+        <h5>Wave Form</h5>
+        <div class="ledLabel">
+          <input type="radio" id="osc2Led0" data-position="0" name="osc2Led" data-waveform="sine" data-osc="2" onclick="setWaveForm(this)">
+          <label for="osc2Led0"><span></span><img src="https://www.dropbox.com/s/tnzshhffok4n9ux/sine.png?dl=0&raw=1" alt="sine wave"></label>
+        </div>
+
+        <div class="ledLabel">
+          <input type="radio" id="osc2Led1" data-position="1" name="osc2Led" data-waveform="square" data-osc="2" onclick="setWaveForm(this)">
+          <label for="osc2Led1"><span></span><img src="https://www.dropbox.com/s/vzq1yzkc123cxug/square.png?dl=0&raw=1" alt="square wave"></label>
+        </div>
+
+        <div class="ledLabel">
+          <input type="radio" id="osc2Led2" data-position="2" name="osc2Led" data-waveform="sawtooth" data-osc="2" onclick="setWaveForm(this)" checked>
+          <label for="osc2Led2"><span></span><img src="https://www.dropbox.com/s/du33z0m0pxkuxar/sawtooth.png?dl=0&raw=1" alt="sawtooth wave"></label>
+        </div>
+
+        <div class="ledLabel">
+          <input type="radio" id="osc2Led3" data-position="3" name="osc2Led" data-waveform="triangle" data-osc="2" onclick="setWaveForm(this)">
+          <label for="osc2Led3"><span></span><img src="https://www.dropbox.com/s/au6p9mn2h8xb0lp/triangle.png?dl=0&raw=1" alt="triangle wave"></label>
+        </div>
+        <div class="ledLabel">
+          <div class="buttonDrop">
+            <button id="switchOsc2Wave" data-osc="2" onclick="setWaveForm(this)"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="gain">
+        <h5>Gain</h5>
+        <input id="osc2Gain" type="range" min="0" max="100" value="100" data-osc="2">
+      </div>
+
+      <div class="octave">
+        <h5>Octave</h5>
+        <div class="ledLabel">
+          <input type="radio" id="osc2OctLed0" data-position="0" name="osc2OctLed" data-osc="2" onclick="setOctave(this)">
+          <label for="osc2OctLed0"><span></span>4'</label>
+        </div>
+        <div class="ledLabel">
+          <input type="radio" id="osc2OctLed1" data-position="1" name="osc2OctLed" data-osc="2" onclick="setOctave(this)">
+          <label for="osc2OctLed1"><span></span>8'</label>
+        </div>
+        <div class="ledLabel">
+          <input type="radio" id="osc2OctLed2" data-position="2" name="osc2OctLed" data-osc="2" onclick="setOctave(this)" checked>
+          <label for="osc2OctLed2"><span></span>16'</label>
+        </div>
+
+        <div class="ledLabel">
+          <div class="buttonDrop">
+            <button id="switchOsc2Octave" data-osc="2" onclick="setOctave(this)"></button>
+          </div>
+        </div>
+      </div>
+
+      <div class="fineTune">
+        <h5>Fine Tune</h5>
+        <input id="osc2FineTune" type="range" min="-10" max="10" value="0" data-osc="2" step="1" list="range_snap">
+      </div>
+    </div>
+    <datalist id="range_snap">
+      <option value="0">
+    </datalist>
+  </div>
+
+  <br>
+  
+  <div id="pianoKeys"><div id="A1" class="white" onmousedown="start(13,this);" onmouseup="stop(this);"><p>A</p><div id="A#1" class="black" onmousedown="start(14,this);" onmouseup="stop(this);"><p>A#</p></div></div><div id="B1" class="white" onmousedown="start(15,this);" onmouseup="stop(this);"><p>B</p></div><div id="C2" class="white" onmousedown="start(16,this);" onmouseup="stop(this);"><p>C</p><div id="C#2" class="black" onmousedown="start(17,this);" onmouseup="stop(this);"><p>C#</p></div></div><div id="D2" class="white" onmousedown="start(18,this);" onmouseup="stop(this);"><p>D</p><div id="D#2" class="black" onmousedown="start(19,this);" onmouseup="stop(this);"><p>D#</p></div></div><div id="E2" class="white" onmousedown="start(20,this);" onmouseup="stop(this);"><p>E</p></div><div id="F2" class="white" onmousedown="start(21,this);" onmouseup="stop(this);"><p>F</p><div id="F#2" class="black" onmousedown="start(22,this);" onmouseup="stop(this);"><p>F#</p></div></div><div id="G2" class="white" onmousedown="start(23,this);" onmouseup="stop(this);"><p>G</p><div id="G#2" class="black" onmousedown="start(24,this);" onmouseup="stop(this);"><p>G#</p></div></div><div id="A2" class="white" onmousedown="start(25,this);" onmouseup="stop(this);"><p>A</p><div id="A#2" class="black" onmousedown="start(26,this);" onmouseup="stop(this);"><p>A#</p></div></div><div id="B2" class="white" onmousedown="start(27,this);" onmouseup="stop(this);"><p>B</p></div><div id="C3" class="white" onmousedown="start(28,this);" onmouseup="stop(this);"><p>C</p><div id="C#3" class="black" onmousedown="start(29,this);" onmouseup="stop(this);"><p>C#</p></div></div><div id="D3" class="white" onmousedown="start(30,this);" onmouseup="stop(this);"><p>D</p><div id="D#3" class="black" onmousedown="start(31,this);" onmouseup="stop(this);"><p>D#</p></div></div><div id="E3" class="white" onmousedown="start(32,this);" onmouseup="stop(this);"><p>E</p></div><div id="F3" class="white" onmousedown="start(33,this);" onmouseup="stop(this);"><p>F</p><div id="F#3" class="black" onmousedown="start(34,this);" onmouseup="stop(this);"><p>F#</p></div></div><div id="G3" class="white" onmousedown="start(35,this);" onmouseup="stop(this);"><p>G</p><div id="G#3" class="black" onmousedown="start(36,this);" onmouseup="stop(this);"><p>G#</p></div></div><div id="A3" class="white" onmousedown="start(37,this);" onmouseup="stop(this);"><p>A</p><div id="A#3" class="black" onmousedown="start(38,this);" onmouseup="stop(this);"><p>A#</p></div></div><div id="B3" class="white" onmousedown="start(39,this);" onmouseup="stop(this);"><p>B</p></div><div id="C4" class="white" onmousedown="start(40,this);" onmouseup="stop(this);"><p>C</p><div id="C#4" class="black" onmousedown="start(41,this);" onmouseup="stop(this);"><p>C#</p></div></div><div id="D4" class="white" onmousedown="start(42,this);" onmouseup="stop(this);"><p>D</p><div id="D#4" class="black" onmousedown="start(43,this);" onmouseup="stop(this);"><p>D#</p></div></div><div id="E4" class="white" onmousedown="start(44,this);" onmouseup="stop(this);"><p>E</p></div><div id="F4" class="white" onmousedown="start(45,this);" onmouseup="stop(this);"><p>F</p><div id="F#4" class="black" onmousedown="start(46,this);" onmouseup="stop(this);"><p>F#</p></div></div><div id="G4" class="white" onmousedown="start(47,this);" onmouseup="stop(this);"><p>G</p><div id="G#4" class="black" onmousedown="start(48,this);" onmouseup="stop(this);"><p>G#</p></div></div><div id="A4" class="white" onmousedown="start(49,this);" onmouseup="stop(this);"><p>A</p></div></div>
+</div>
+  </body>
+</html>
